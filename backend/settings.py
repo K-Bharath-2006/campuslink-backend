@@ -14,6 +14,7 @@ from pathlib import Path
 from mongoengine import connect
 from decouple import config 
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -110,13 +112,9 @@ DATABASES = {
     }
 }
 
-try:
-    connect(
-    db="CampusLink",
-    host= "mongodb+srv://glbharath2006:yAPYBX9w.PunccV@campuscluster.6mjgo3x.mongodb.net/CampusLink"
-)
-except Exception as error:
-    print("Something")
+MONGO_URI = config("MONGO_URI")
+
+connect(host=MONGO_URI)
 
 
 
